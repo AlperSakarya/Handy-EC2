@@ -17,7 +17,5 @@ def color_i_state():
 		return t.yellow(instance.state)
 
 for instance in instances:
-	print "-- ", t.bold("Instance:") ,instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Name:"), instance.tags['Name']
+	print "-- ", t.bold("Instance:") ,instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "||", t.bold("Name:") ,instance.tags['Name'] 
 print t.blue("#########################################################")
-
-
