@@ -68,6 +68,7 @@ def main_function():
         time.sleep(3)
         main_function()
 
+# Running the app and capturing SIGINT
 try:
     main_function()
 except KeyboardInterrupt:
