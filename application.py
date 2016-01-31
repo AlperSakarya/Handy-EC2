@@ -1,9 +1,11 @@
 import boto, os, time, sys
 from blessings import Terminal
+from boto.manage.cmdshell import sshclient_from_instance
 
 ec2 = boto.connect_ec2()
 instances = ec2.get_only_instances()
 t = Terminal()
+
 
 
 def main_function():
@@ -34,10 +36,11 @@ def main_function():
             number = (number + 1)
 
     print t.blue("##########################################################################################")
-    print "Refresh instance list - Press 0"
-    print "Start an Instance     - Press 1"
-    print "Stop  an Instance     - Press 2"
-    print "Ctrl + C to exit or   - Press 9"
+    print "Refresh instance list  - Press 0"
+    print "Start an Instance      - Press 1"
+    print "Stop  an Instance      - Press 2"
+    print "Connect to an Instance - Press 3"
+    print "Ctrl + C to exit or    - Press 9"
 
     operation = raw_input()
     if operation == "0":
@@ -58,6 +61,14 @@ def main_function():
         print "Instance is stopping..."
         time.sleep(3)
         main_function()
+
+    elif operation == "3":
+        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
+        selected_instance = (selected_instance - 1)
+        ssh_username = raw_input("What is the SSH user?")
+        ssh_instance = instances[selected_instance]
+        keypath = "/Users/sakaryaa/.ssh/EC2-NEW.pem"
+        boto.manage.cmdshell.sshclient_from_instance(ssh_instance,keypath,host_key_file='~/.ssh/known_hosts',user_name=ssh_username, ssh_pwd=None).run("ls")
 
     elif operation == "9":
         print "GOOD BYE..."
