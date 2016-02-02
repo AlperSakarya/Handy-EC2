@@ -1,11 +1,13 @@
 import boto, os, time, sys
-from blessings import Terminal
-from boto.manage.cmdshell import sshclient_from_instance
+
+try:
+    from blessings import Terminal
+except ImportError, e:
+    os.system("pip install blessings")
 
 ec2 = boto.connect_ec2()
 instances = ec2.get_only_instances()
 t = Terminal()
-
 
 
 def main_function():
@@ -13,7 +15,11 @@ def main_function():
     number = 1
     n = len(instances)
     # Replace this with your own key
-    keypath = "/path/to/your/key.pem"
+    ssh_keyPath = "/path/to/mykey.pem"
+
+    def ssh_to_instance():
+            ssh_command = "ssh -i {0} {1}@{2}".format(ssh_keyPath, ssh_username, ssh_instance)
+            os.system(ssh_command)
 
     # Coloring of running/stopped/other states
     def color_i_state():
@@ -38,11 +44,11 @@ def main_function():
             number = (number + 1)
 
     print t.blue("##########################################################################################")
-    print "Refresh instance list  - Press 0"
-    print "Start an Instance      - Press 1"
-    print "Stop  an Instance      - Press 2"
-    print "Connect to an Instance - Press 3"
-    print "Ctrl + C to exit or    - Press 9"
+    print "REFRESH  - Press 0"
+    print "START    - Press 1"
+    print "STOP     - Press 2"
+    print "SSH      - Press 3"
+    print "EXIT     - Press 9"
 
     operation = raw_input()
     if operation == "0":
@@ -67,12 +73,15 @@ def main_function():
     elif operation == "3":
         selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
         selected_instance = (selected_instance - 1)
-        ssh_username = raw_input("What is the SSH user?")
+        ssh_username = (raw_input("What is the SSH user?")).lower()
         ssh_instance = instances[selected_instance].ip_address
-        print ssh_instance
-        print ssh_username
-        ssh_command = "ssh -i {0} {1}@{2}".format(keypath, ssh_username, ssh_instance)
-        os.system(ssh_command)
+        if os.path.exists(ssh_keyPath):
+            ssh_to_instance()
+        else:
+            print "SSH Private Key can't be found..."
+            time.sleep(3)
+            ssh_keyPath = raw_input("Please enter full path for your private key e.g /home/myuser/mykey.pem")
+            ssh_to_instance()
 
     elif operation == "9":
         print "GOOD BYE..."
