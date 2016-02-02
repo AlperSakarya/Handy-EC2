@@ -2,9 +2,11 @@ import os
 import time
 import sys
 
+# ######################################## #
 # REPLACE THIS WITH YOUR PRIVATE KEY
-ssh_keyPath = "/path/to/your/key.pem"
-
+# ######################################## #
+ssh_keyPath = "/your/keydir/mykey.pem"
+# ######################################## #
 
 # Installing required packages if they are not installed
 try:
@@ -47,19 +49,24 @@ def main_function():
             return t.yellow(instance.state)
 
     # Describe instances the way I want to see
-    print t.blue("##########################################################################################")
+    print t.blue("########################################################")
     print "TOTAL INSTANCES:", n
+    print "----------------------------------------"
     for instance in instances:
         color_i_state()
         # looking to see if instance tag exist or not
         if 'Name' in instance.tags:
-            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "\n", t.bold("Name:"), instance.tags['Name']
+            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "\n", \
+                t.bold("Public IP:"), instance.ip_address, "||", t.bold("Name:"), instance.tags['Name'], \
+                "\n----------------------------------------"
             number = (number + 1)
         else:
-            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "\n", t.bold("Name:"), "no tag OR not available now"
+            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "\n", \
+                t.bold("Public IP:"), instance.ip_address, "||", t.bold("Name:"), "no tag OR not available now", \
+                "\n----------------------------------------"
             number = (number + 1)
 
-    print t.blue("##########################################################################################")
+    print t.blue("########################################################")
     print "REFRESH  - Press 0"
     print "START    - Press 1"
     print "STOP     - Press 2"
