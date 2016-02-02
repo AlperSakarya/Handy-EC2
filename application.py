@@ -1,5 +1,12 @@
-import os, time, sys
+import os
+import time
+import sys
 
+# REPLACE THIS WITH YOUR PRIVATE KEY
+ssh_keyPath = "/Users/sakaryaa/.ssh/EC2-NEW.pem"
+
+
+# Installing required packages if they are not installed
 try:
     import boto
 except ImportError, e:
@@ -15,7 +22,6 @@ except ImportError, e:
     os.system("sudo pip install blessings")
     from blessings import Terminal
 
-
 ec2 = boto.connect_ec2()
 instances = ec2.get_only_instances()
 t = Terminal()
@@ -25,8 +31,7 @@ def main_function():
     os.system('clear')
     number = 1
     n = len(instances)
-    # Replace this with your own key
-    ssh_keyPath = "/path/to/mykey.pem"
+    global ssh_keyPath
 
     def ssh_to_instance():
             ssh_command = "ssh -i {0} {1}@{2}".format(ssh_keyPath, ssh_username, ssh_instance)
@@ -48,10 +53,10 @@ def main_function():
         color_i_state()
         # looking to see if instance tag exist or not
         if 'Name' in instance.tags:
-            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "||", t.bold("Name:"), instance.tags['Name']
+            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "\n", t.bold("Name:"), instance.tags['Name']
             number = (number + 1)
         else:
-            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "||", t.bold("Name:"), "no tag OR not available now"
+            print number, t.bold("Instance:"), instance.id, "||", t.bold("State:"), color_i_state(), "||", t.bold("Public IP:"), instance.ip_address, "\n", t.bold("Name:"), "no tag OR not available now"
             number = (number + 1)
 
     print t.blue("##########################################################################################")
