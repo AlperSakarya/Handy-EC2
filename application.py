@@ -1,4 +1,9 @@
-import boto, os, time, sys
+import os, time, sys
+
+try:
+    import boto
+except ImportError, e:
+    os.system("pip install boto")
 
 try:
     from blessings import Terminal
