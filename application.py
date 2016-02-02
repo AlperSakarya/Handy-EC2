@@ -6,12 +6,14 @@ except ImportError, e:
     print "BOTO COULD NOT BE FOUND TRYING TO INSTALL IT..."
     time.sleep(2)
     os.system("sudo pip install boto")
+    import boto
 
 try:
     from blessings import Terminal
 except ImportError, e:
     print "BLESSINGS COULD NOT BE FOUND TRYING TO INSTALL IT..."
     os.system("sudo pip install blessings")
+    from blessings import Terminal
 
 
 ec2 = boto.connect_ec2()
