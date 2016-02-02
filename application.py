@@ -3,12 +3,16 @@ import os, time, sys
 try:
     import boto
 except ImportError, e:
-    os.system("pip install boto")
+    print "BOTO COULD NOT BE FOUND TRYING TO INSTALL IT..."
+    time.sleep(2)
+    os.system("sudo pip install boto")
 
 try:
     from blessings import Terminal
 except ImportError, e:
-    os.system("pip install blessings")
+    print "BLESSINGS COULD NOT BE FOUND TRYING TO INSTALL IT..."
+    os.system("sudo pip install blessings")
+
 
 ec2 = boto.connect_ec2()
 instances = ec2.get_only_instances()
