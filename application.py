@@ -3,7 +3,7 @@ import time
 import sys
 
 # REPLACE THIS WITH YOUR PRIVATE KEY
-ssh_keyPath = "/Users/sakaryaa/.ssh/EC2-NEW.pem"
+ssh_keyPath = "/path/to/your/key.pem"
 
 
 # Installing required packages if they are not installed
