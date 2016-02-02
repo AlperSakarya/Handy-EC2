@@ -12,6 +12,8 @@ def main_function():
     os.system('clear')
     number = 1
     n = len(instances)
+    # Replace this with your own key
+    keypath = "/path/to/your/key.pem"
 
     # Coloring of running/stopped/other states
     def color_i_state():
@@ -66,9 +68,11 @@ def main_function():
         selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
         selected_instance = (selected_instance - 1)
         ssh_username = raw_input("What is the SSH user?")
-        ssh_instance = instances[selected_instance]
-        keypath = "/Users/sakaryaa/.ssh/EC2-NEW.pem"
-        boto.manage.cmdshell.sshclient_from_instance(ssh_instance,keypath,host_key_file='~/.ssh/known_hosts',user_name=ssh_username, ssh_pwd=None).run("ls")
+        ssh_instance = instances[selected_instance].ip_address
+        print ssh_instance
+        print ssh_username
+        ssh_command = "ssh -i {0} {1}@{2}".format(keypath, ssh_username, ssh_instance)
+        os.system(ssh_command)
 
     elif operation == "9":
         print "GOOD BYE..."
