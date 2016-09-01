@@ -79,7 +79,7 @@ def main_function():
         main_function()
 
     elif operation == "1":
-        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
+        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2\n"))
         selected_instance = (selected_instance - 1)
         instances[selected_instance].start()
         print "Instance is starting..."
@@ -87,7 +87,7 @@ def main_function():
         main_function()
 
     elif operation == "2":
-        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
+        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2\n"))
         selected_instance = (selected_instance - 1)
         instances[selected_instance].stop()
         print "Instance is stopping..."
@@ -95,7 +95,7 @@ def main_function():
         main_function()
 
     elif operation == "3":
-        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2 "))
+        selected_instance = int(raw_input("What is the instance number? e.g 1 or 2\n"))
         selected_instance = (selected_instance - 1)
         ssh_username = (raw_input("What is the SSH user?")).lower()
         ssh_instance = instances[selected_instance].ip_address
